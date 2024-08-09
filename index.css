@@ -1,0 +1,15 @@
+header nav ul li a {
+  color: yellow;
+}
+header nav ul li a:hover {
+  color: white;
+}
+
+button, .btn {
+  background-color: red;
+}
+button::after, .btn::after {
+  content: attr(data-text);
+  display: block;
+  text-transform: uppercase;
+}/*# sourceMappingURL=index.css.map */

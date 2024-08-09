@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pygmy Seahorse</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="index.css">
+</head>
+<style>
+    body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    color: #333;
+    background-color: #f4f4f4;
+}
+.lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            overflow: hidden;
+        }
+
+        .lightbox-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 80%;
+            text-align: center;
+        }
+
+        .lightbox img, .lightbox video {
+            max-width: 100%;
+            max-height: 80vh;
+        }
+
+        .lightbox .close, .lightbox .prev, .lightbox .next {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 2rem;
+            color: white;
+            cursor: pointer;
+        }
+
+        .lightbox .close {
+            right: 10px;
+            top: 10px;
+        }
+
+        .lightbox .prev {
+            left: 10px;
+        }
+
+        .lightbox .next {
+            right: 50px;
+        }
+
+/* Header and Navigation */
+header {
+    background: linear-gradient(to right, red, red); 
+            color: white;
+            padding: 1.5rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            animation: slideInFromTop 1s ease-in-out;
+            width: 100%;
+            transition: top 0.3s;
+}
+header.fixed {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        @keyframes slideInFromTop {
+            0% {
+                transform: translateY(-100%);
+            }
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+
+header nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+header nav ul li {
+    display: inline;
+    margin: 0 10px;
+}
+
+header nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+header nav ul li a:hover {
+    text-decoration: underline;
+}
+
+/* Main Content */
+main {
+            padding: 30px;
+            max-width: 900px;
+            margin: 20px auto;
+            background-color: #ffffff; 
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        main h2 {
+            color: #cc0088;
+            font-size: 2.4rem;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #cc0088;
+            padding-bottom: 10px;
+        }
+
+        main h3 {
+            color: #004d40;
+            font-size: 1.8rem;
+            margin-top: 20px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+        }
+
+
+/* Gallery Styles */
+.image-gallery, .video-gallery {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .image-gallery figure, .video-gallery video {
+            flex: 1;
+            min-width: 200px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .image-gallery figure:hover, .video-gallery video:hover {
+            transform: scale(1.05);
+        }
+
+        .image-gallery img, .video-gallery video {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .image-gallery figcaption {
+            text-align: center;
+            padding: 5px;
+            background-color: #f8f8f8;
+            font-size: 1rem;
+            color: #cc0088;
+        }
+        
+/* Buttons */
+        button {
+            background-color: red; 
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 1rem;
+            text-transform: uppercase; 
+            position: relative;
+        }
+
+        button::after {
+            content: ' '; 
+            display: block;
+            width: 100%;
+            height: 2px;
+            background-color: #cc0088;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        button:hover::after {
+            transform: scaleX(1);
+        }
+
+
+/* Footer */
+footer {
+            background: linear-gradient(to right, #c57fb9, #c57fb9); 
+            color: white;
+            text-align: center;
+            padding: 15px 0;
+            margin-top: 20px;
+            box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        footer p {
+            margin: 0;
+            font-size: 1rem;
+        }
+
+        footer a {
+            color: #ffeb3b;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+</style>
+<body>
+    <header>
+        <h1>Pygmy Seahorse</h1>
+        <nav>
+            <ul>
+                <li><a href="#overview">Overview</a></li>
+                <li><a href="#habitat">Habitat</a></li>
+                <li><a href="#physical characteristics">Physical Characteristics</a></li>
+                <li><a href="#behavior">Behavior</a></li>
+                <li><a href="#diet">Diet</a></li>
+                <li><a href="#conservation">Conservation</a></li>
+                <li><a href="#gallery">Gallery</a></li>
+                <li><a href="contact.html" target="_blank">Contact Us</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="overview">
+            <h2>Overview</h2>
+            <p>The pygmy seahorse (Hippocampus bargibanti) is a small and elusive species of seahorse found primarily in the Coral Triangle region.They are known for their remarkable ability to blend in with their surroundings, pygmy seahorses are some of the most well-camouflaged creatures in the ocean, making them difficult to spot.</p>
+        </section>
+
+        <section id="habitat">
+            <h2>Habitat</h2>
+            <p>Pygmy seahorses inhabit coral reefs, specifically gorgonian corals, which are a type of soft coral. They are found at depths ranging from 10 to 40 meters. Their preference for gorgonian corals is due to their exceptional camouflage, as they often resemble the polyps of the coral in both color and texture.</p>
+        </section>
+
+        <section id="physical characteristics">
+            <h2>Physical Characteristics</h2>
+            <p>Pygmy seahorses are exceptionally small, typically measuring around 2 centimeters in length, with a body shape that includes a prehensile tail used for anchoring to coral branches. Their coloration is highly variable, matching the gorgonian coral they inhabit, ranging from pink to yellow and covered in wart-like tubercles that mimic coral polyps. This camouflage is further enhanced by their bumpy body texture, which blends seamlessly with the coral. Additionally, pygmy seahorses have independently moving eyes, allowing them to scan their surroundings without moving their bodies, aiding in both predator avoidance and prey detection.</p>
+        </section>
+
+        <section id="behavior">
+            <h2>Behavior</h2>
+            <p>Pygmy seahorses are known for their sedentary lifestyle, often remaining attached to the same coral branch for extended periods. They are monogamous and form pairs, with males carrying the fertilized eggs in a brood pouch until they hatch. This behavior ensures a higher survival rate for the offspring.</p>
+        </section>
+
+        <section id="diet">
+            <h2>Diet</h2>
+            <p>Pygmy seahorses are carnivorous, feeding primarily on small crustaceans and planktonic organisms. They use their elongated snouts to suck in tiny prey, often relying on their excellent camouflage to ambush their food.</p>
+        </section>
+
+        <section id="conservation">
+            <h2>Conservation Status</h2>
+            <p>Due to their elusive nature and specific habitat requirements, pygmy seahorses are challenging to study, and as a result, there is limited data on their population sizes and trends. However, they are considered vulnerable due to threats such as coral reef destruction, climate change, and pollution.</p>
+        </section>
+
+        <section id="gallery">
+            <h2>Gallery</h2>
+            <div class="image-gallery">
+                <figure>
+                    <img src="img/pygmy.jpg" alt="Close-up Pygmy Seahorse">
+                    <figcaption>Close-up Pygmy Seahorse</figcaption>
+                </figure>
+                <figure>
+                    <img src="img/pygmyc.jpg" alt="Pygmy Seahorse camouflage">
+                    <figcaption>Pygmy Seahorse camouflage</figcaption>
+                </figure>
+                <figure>
+                    <img src="img/pygmyrr.jpeg" alt="Pygmy Seahorse reproduction">
+                    <figcaption>Pygmy Seahorse reproduction</figcaption>
+                </figure>
+            </div>
+
+            <div class="video-gallery">
+                <video controls>
+                    <source src="video/PygmyV.mp4" type="video/mp4">
+                    Pygmy Seahorse.
+                </video>
+                <video controls>
+                    <source src="video/PygmyV2.mp4" type="video/mp4">
+                    Pygmy Seahorse.
+                </video>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2024 Pygmy Seahorse Conservation Project</p>
+        <p>References and citations: 
+            <a href="https://fishingworld.ca/pages/ontario-fish-species" target="_blank">Fishing World</a>,
+            <a href="https://oceana.org/marine-life/ocean-fishes" target="_blank">Oceana</a></p>
+            <button><a href="contact.html" target="_blank">CONTACT US</a></button>
+    </footer>
+    <!-- Lightbox -->
+    <div class="lightbox">
+        <div class="lightbox-content">
+            <span class="close">&times;</span>
+            <span class="prev">&#10094;</span>
+            <span class="next">&#10095;</span>
+            <img src="" alt="">
+            <video controls style="display:none;">
+                <source src="" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <figcaption></figcaption>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function() {
+            let currentIndex = 0;
+            const $lightbox = $('.lightbox');
+            const $lightboxImg = $('.lightbox img');
+            const $lightboxVideo = $('.lightbox video');
+            const $figcaption = $('.lightbox figcaption');
+            const $prevBtn = $('.lightbox .prev');
+            const $nextBtn = $('.lightbox .next');
+            const $images = $('.image-gallery figure img');
+            const $videos = $('.video-gallery video');
+
+            function showLightbox(index) {
+                const $items = $images.add($videos);
+                const $currentItem = $items.eq(index);
+                
+                if ($currentItem.is('img')) {
+                    $lightboxImg.attr('src', $currentItem.attr('src')).show();
+                    $lightboxVideo.hide();
+                } else {
+                    $lightboxVideo.find('source').attr('src', $currentItem.find('source').attr('src'));
+                    $lightboxVideo.show();
+                    $lightboxImg.hide();
+                }
+
+                $figcaption.text($currentItem.closest('figure').find('figcaption').text());
+                $lightbox.fadeIn();
+            }
+
+            function hideLightbox() {
+                $lightbox.fadeOut();
+            }
+
+            $images.closest('figure').on('click', function() {
+                currentIndex = $images.closest('figure').index($(this));
+                showLightbox(currentIndex);
+            });
+
+            $videos.on('click', function() {
+                currentIndex = $videos.index($(this)) + $images.length;
+                showLightbox(currentIndex);
+            });
+
+            $('.lightbox .close').on('click', hideLightbox);
+
+            $(window).on('click', function(event) {
+                if ($(event.target).is('.lightbox')) {
+                    hideLightbox();
+                }
+            });
+
+            $prevBtn.on('click', function() {
+                currentIndex = (currentIndex > 0) ? currentIndex - 1 : $images.length + $videos.length - 1;
+                showLightbox(currentIndex);
+            });
+
+            $nextBtn.on('click', function() {
+                currentIndex = (currentIndex < $images.length + $videos.length - 1) ? currentIndex + 1 : 0;
+                showLightbox(currentIndex);
+            });
+
+            // Check if the header needs to be fixed
+            $(window).scroll(function() {
+                if ($(this).scrollTop() > 100) { 
+                    $('header').addClass('fixed');
+                } else {
+                    $('header').removeClass('fixed');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

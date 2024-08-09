@@ -1,0 +1,53 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us</title>
+    <link rel="stylesheet" href="contact.css">
+    
+</head>
+<body>
+  <form action="https://formspree.io/f/xeojgvwy" method="POST" method="POST" name="contactForm" onsubmit="return sendEmail()">
+    <div class="contact-form">
+        <h1>Contact Us</h1>
+        <div class="welcome-message">Welcome to the Contact Us form. If you want to know more about this species, you can contact us. </div>
+        <p>We would love to hear from you! Please fill out this form and we will get in touch with you shortly.</p>
+        <div class="form-group">
+            <label for="first-name">First Name</label>
+            <input type="text" id="first-name" name="first-name" required>
+        </div>
+        <div class="form-group">
+            <label for="last-name">Last Name</label>
+            <input type="text" id="last-name" name="last-name" required>
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+        <div class="form-group">
+            <label for="date">Date</label>
+            <input type="date" id="date" name="date" required>
+        </div>
+        <div class="form-group">
+            <label for="phone">Phone</label>
+            <input type="tel" id="phone" name="phone" required pattern="\d{3}-\d{3}-\d{4}" placeholder="123-456-7890">
+
+        </div>
+        <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="5" required></textarea>
+        </div>
+        <button type="submit" id="submit" onclick="validateForm()">Submit</button>
+    </form>
+    </div>
+    <footer>
+        <p>&copy; 2024 Sea Animal Webpage. All rights reserved.</p>
+    </footer>
+    <script src="https://smtpjs.com/v3/smtp.js"></script> 
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+ 
+    <script src="validation.js"></script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+$menu-text-color: yellow;
+$menu-hover-color: white;
+$button-bg-color: red;
+$form-border: 2px dashed black;
+
+// Menu Styles
+header nav ul li a {
+  color: $menu-text-color;
+
+  &:hover {
+    color: $menu-hover-color;
+  }
+}
+
+// Button Styles
+button, .btn {
+  background-color: $button-bg-color;
+  
+  &::after {
+    content: attr(data-text);
+    display: block;
+    text-transform: uppercase;
+  }
+}
